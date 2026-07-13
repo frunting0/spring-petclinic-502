@@ -20,6 +20,11 @@ pipeline {
         sh 'mvn -Dmaven.test.failure.ignore=true clean package'
       }
     }
+    // Docker Images 생성
+
+    // Docker Image Push
+
+    
     // SSH를 이용한 실행 파일 전송 및 실행
     stage('SSH Publish') {
       steps {
