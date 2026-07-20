@@ -6,7 +6,7 @@ pipeline {
     jdk "JDK21"
   }
   enviroment {
-    DOCKERHUB_CRED = credeintials('dockerCredentials')
+    DOCKERHUB_CRED = credentials('dockerCredentials')
   }
 
   
