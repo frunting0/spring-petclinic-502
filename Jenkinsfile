@@ -54,7 +54,9 @@ pipeline {
         execCommand: '''
         #docker rm -f $(docker ps -aq)
         #docker rmi -f $(docker image)
-        docker run -itd -p 80:8080 --name=spring-petclinic frunting0/spring-petclinic:latest
+        #docker run -itd -p 80:8080 --name=spring-petclinic frunting0/spring-petclinic:latest
+	kubectl apply -f /home/db.yml
+	kubectl apply -f /home/petclinic.yml
         ''',
         execTimeout: 120000,
         flatten: false,
