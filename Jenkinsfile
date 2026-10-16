@@ -29,7 +29,7 @@ pipeline {
       steps {
         sh '''
           docker build -t spring-petclinic:${BUILD_NUMBER} .
-          docker tag spring-petclinic:${BUILD_NUMBER} hronting/spring-petclinic:latest
+          docker tag spring-petclinic:${BUILD_NUMBER} frunting0/spring-petclinic:latest
         '''
       }
     }
@@ -39,7 +39,7 @@ pipeline {
       steps {
         sh '''
           echo ${DOCKERHUB_CRED_PSW} | docker login -u ${DOCKERHUB_CRED_USR} --password-stdin
-          docker push hronting/spring-petclinic:latest
+          docker push frunting0/spring-petclinic:latest
         '''
       }
     }
@@ -48,13 +48,13 @@ pipeline {
     // SSH를 이용한 실행 파일 전송 및 실행
     stage('SSH Publish') {
       steps {
-        sshPublisher(publishers: [sshPublisherDesc(configName: 'target',
+        sshPublisher(publishers: [sshPublisherDesc(configName: 'k8s-master',   #publish over ssh에 지정한 이름 쓰기 
         transfers: [sshTransfer(cleanRemote: false,
         excludes: '',
         execCommand: '''
-        docker rm -f $(docker ps -aq)
-        docker rmi -f $(docker image)
-        docker run -itd -p 80:8080 --name=spring-petclinic hronting/spring-petclinic:latest
+        #docker rm -f $(docker ps -aq)
+        #docker rmi -f $(docker image)
+        docker run -itd -p 80:8080 --name=spring-petclinic frunting0/spring-petclinic:latest
         ''',
         execTimeout: 120000,
         flatten: false,
@@ -75,7 +75,7 @@ pipeline {
       steps {
         sh '''
         docker rmi -f spring-petclinic:${BUILD_NUMBER}
-        docker rmi -f hronting/spring-petclinic:latest
+        docker rmi -f frunting0/spring-petclinic:latest
         '''
       } 
     }
