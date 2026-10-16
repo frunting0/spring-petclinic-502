@@ -48,7 +48,7 @@ pipeline {
     // SSH를 이용한 실행 파일 전송 및 실행
     stage('SSH Publish') {
       steps {
-        sshPublisher(publishers: [sshPublisherDesc(configName: 'k8s-master',   #publish over ssh에 지정한 이름 쓰기 
+        sshPublisher(publishers: [sshPublisherDesc(configName: 'k8s-master',   //  publish over ssh에 지정한 이름 쓰기 
         transfers: [sshTransfer(cleanRemote: false,
         excludes: '',
         execCommand: '''
