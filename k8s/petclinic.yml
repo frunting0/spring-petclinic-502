@@ -19,7 +19,7 @@ metadata:
   labels:
     app: petclinic
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: petclinic
@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
         - name: workload
-          image: dsyer/petclinic
+          image: frunting0/spring-petclinic:latest
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: postgres
@@ -41,6 +41,19 @@ spec:
                 {
                   "management.endpoint.health.probes.add-additional-paths": true
                 }
+            - name: POSTGRES_URL
+              value: jdbc:postgresql://demo-db:5432/petclinic
+
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: demo-db
+                  key: username
+            - name: POSTGRES_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: demo-db
+                  key: password
           ports:
             - name: http
               containerPort: 8080
