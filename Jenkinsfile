@@ -58,12 +58,13 @@ pipeline {
 
 	# ---- root home에 있는 yml 을 일반 home 으로 복사 (권한 문제 방지)----------
 
-	cp -av db.yml /home/db.yml                              
-	cp -av petclinic.yml /home/petclinic.yml
-	kubectl apply -f /home/db.yml
-	kubectl apply -f /home/petclinic.yml
+	mkdir -p /home/k8s
 
-	cat("컨테이너를 Jenkins 파이프라인으로 활성화 했습니다")
+	cp -av /root/spring-petclinic-502/k8s/*.yaml /home/k8s
+
+	kubectl apply -f /home/k8s/
+
+	echo "컨테이너를 Jenkins 파이프라인으로 kubernetes 배포 완료"
         ''',
         execTimeout: 120000,
         flatten: false,

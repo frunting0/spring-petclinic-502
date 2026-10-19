@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: petclinic
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
     - port: 80
       targetPort: 8080
