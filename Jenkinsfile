@@ -52,14 +52,15 @@ pipeline {
         transfers: [sshTransfer(cleanRemote: false,
         excludes: '',
         execCommand: '''
+	set -ex
         #docker rm -f $(docker ps -aq)
         #docker rmi -f $(docker image)
         #docker run -itd -p 80:8080 --name=spring-petclinic frunting0/spring-petclinic:latest
 
 	# ---- root home에 있는 yml 을 일반 home 으로 복사 (권한 문제 방지)----------
-
+	echo "---디렉터리 생성---"
 	mkdir -p /home/k8s
-
+	echo "---디렉터리 생성 확인---"
 	cp -av /root/spring-petclinic-502/k8s/*.yaml /home/k8s
 
 	kubectl apply -f /home/k8s/
