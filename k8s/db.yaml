@@ -59,6 +59,12 @@ spec:
                 secretKeyRef:
                   name: demo-db
                   key: database
+          
+    # ------------ nfs 내용 추가---------------
+          volumeMounts:
+            - mountPath: /var/lib/postgresql
+              name: db-nfs
+    #------------nfs 내용 끝 -----------------       
           ports:
             - containerPort: 5432
               name: postgresql
@@ -71,3 +77,9 @@ spec:
           startupProbe:
             tcpSocket:
               port: postgresql
+      volumes:
+          - name: db-nfs
+            nfs:
+              server: 192.168.30.30
+              path: /mnt/db
+              readOnly: false
