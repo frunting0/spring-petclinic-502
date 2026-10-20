@@ -6,7 +6,7 @@ spec:
   ingressClassName: nginx
   rules:
     - host: www.smile.com
-    - http:
+      http:
         paths:
           - path: /
             pathType: Prefix
